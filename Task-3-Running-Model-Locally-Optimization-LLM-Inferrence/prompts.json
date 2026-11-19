@@ -1,0 +1,64 @@
+
+[
+    {
+      "id": "P01",
+      "category": "factual_qa",
+      "prompt": "What is the capital of Japan? Answer with only the city name.",
+      "expected": "Tokyo"
+    },
+    {
+      "id": "P02",
+      "category": "arithmetic",
+      "prompt": "A server processes 240 requests in 8 seconds. Calculate its throughput in requests per second.",
+      "expected": "30 requests per second"
+    },
+    {
+      "id": "P03",
+      "category": "logical_reasoning",
+      "prompt": "All servers are computers. Some computers are laptops. Does it necessarily follow that some servers are laptops? Answer yes or no and briefly explain.",
+      "expected": "No. The premises do not establish that any servers are laptops."
+    },
+    {
+      "id": "P04",
+      "category": "structured_output",
+      "prompt": "A job completed successfully after 2 retries. Return only a valid JSON object with exactly two keys: status and retries. Status must be the string success, and retries must be an integer.",
+      "expected": "{\"status\":\"success\",\"retries\":2}"
+    },
+    {
+      "id": "P05",
+      "category": "coding",
+      "prompt": "Write exactly one Python line that creates a list containing the squares of integers 1 through 5.",
+      "expected": "A valid one-line Python expression producing [1, 4, 9, 16, 25]."
+    },
+    {
+      "id": "P06",
+      "category": "summarization",
+      "prompt": "Summarize in at most 15 words: A software release increased API latency. Engineers identified an inefficient database query and reverted the release, restoring normal latency.",
+      "expected": "Must preserve the release-related latency increase, database-query issue, rollback, and recovery."
+    },
+    {
+      "id": "P07",
+      "category": "information_extraction",
+      "prompt": "Extract only incident_id and severity as valid JSON from: Incident INC-42, severity SEV2, occurred Monday, owner Platform Team.",
+      "expected": "{\"incident_id\":\"INC-42\",\"severity\":\"SEV2\"}"
+    },
+    {
+      "id": "P08",
+      "category": "instruction_following",
+      "prompt": "Sort the following words alphabetically. Return only a comma-separated list: cache, latency, token, batch.",
+      "expected": "batch, cache, latency, token"
+    },
+    {
+      "id": "P09",
+      "category": "numerical_reasoning",
+      "prompt": "A GPU has 24 GB of memory. Model weights require 6 GB and runtime overhead requires 2 GB. How much memory remains?",
+      "expected": "16 GB"
+    },
+    {
+      "id": "P10",
+      "category": "technical_explanation",
+      "prompt": "Explain the purpose of the transformer KV cache in exactly two sentences without using the word faster.",
+      "expected": "Two technically correct sentences describing reuse of previous attention keys and values, without the forbidden word."
+    }
+  ]
+  

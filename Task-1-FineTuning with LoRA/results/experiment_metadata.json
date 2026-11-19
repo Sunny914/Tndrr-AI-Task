@@ -1,0 +1,21 @@
+{
+  "base_model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "dataset": "fancyzhx/ag_news",
+  "training_examples": 800,
+  "validation_examples": 100,
+  "heldout_examples": 100,
+  "random_seed": 42,
+  "lora_rank": 8,
+  "lora_alpha": 16,
+  "lora_targets": [
+    "q_proj",
+    "v_proj"
+  ],
+  "training_epochs": 2,
+  "learning_rate": 0.0002,
+  "base_accuracy": 0.28,
+  "lora_accuracy": 0.84,
+  "improvement_percentage_points": 56.0,
+  "hardware": "NVIDIA Tesla T4",
+  "memory_estimates": "Theoretical parameter-related memory only"
+}

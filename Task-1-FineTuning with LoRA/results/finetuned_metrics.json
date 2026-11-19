@@ -1,0 +1,8 @@
+{
+  "model": "Qwen/Qwen2.5-0.5B-Instruct + LoRA",
+  "evaluation_examples": 100,
+  "accuracy": 0.84,
+  "macro_f1": 0.8383480248783577,
+  "correct_predictions": 84,
+  "invalid_outputs": 0
+}

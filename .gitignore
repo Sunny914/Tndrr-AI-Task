@@ -1,0 +1,54 @@
+# Virtual environments
+.venv/
+**/.venv/
+venv/
+env/
+
+# Python bytecode and tooling
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+**/.ipynb_checkpoints/
+.ipynb_checkpoints/
+
+# Secrets and local environment
+.env
+**/.env
+.env.*
+!.env.example
+
+# Hugging Face / download caches
+.cache/
+**/.cache/
+hf_cache/
+.hf-cache/
+**/.cache/huggingface/
+
+# Ollama / local model weights (re-download; do not commit)
+models/
+*.gguf
+*.bin
+*.pt
+*.pth
+*.ckpt
+*.onnx
+
+# Generated embedding / RAG caches
+cache/
+*.npy
+
+# Backup archives
+*.zip
+
+# Nested git metadata if a subdirectory was previously a repo
+**/.git/
+
+# Editor / OS noise
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+docs/preview/

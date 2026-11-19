@@ -1,0 +1,32 @@
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Local model weights and caches (GGUF files are large; re-download per README)
+models/
+*.gguf
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Hugging Face hub cache (if redirected under project root)
+.hf-cache/
+**/.cache/huggingface/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db

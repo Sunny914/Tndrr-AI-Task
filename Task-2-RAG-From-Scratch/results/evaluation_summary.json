@@ -1,0 +1,82 @@
+{
+  "status": "measured",
+  "n_verified_questions": 15,
+  "top_k": 5,
+  "metrics": {
+    "hit_at_1": "Page-based supporting-evidence Hit@1: 1 if the rank-1 retrieved chunk's physical PDF page is one of the gold supporting pages, else 0. Reported as the mean over evaluated questions.",
+    "hit_at_5": "Page-based supporting-evidence Hit@5: 1 if at least one of the top-5 retrieved chunks belongs to a verified supporting page, else 0. Reported as the mean over evaluated questions.",
+    "mrr": "Mean Reciprocal Rank: for each question, 1/rank of the first top-5 chunk whose page is a gold supporting page, or 0 if none of the top-5 pages match. Mean over evaluated questions. Rank is 1-based.",
+    "quote_hit_at_5": "Exact supporting-quote retrieval Hit@5: 1 if the verified evidence quote occurs (whitespace-normalized) in at least one of the top-5 retrieved chunk texts, else 0. This is stricter than page matching.",
+    "page_match_limitation": "Page-level matching is a proxy for evidence relevance. A chunk can come from the correct PDF page yet miss the supporting sentence, so Hit@1/Hit@5 can overestimate true evidence retrieval. Quote Hit@5 is reported to expose that gap."
+  },
+  "chunk_comparison": [
+    {
+      "config_id": "A",
+      "chunk_size": 120,
+      "overlap": 20,
+      "n_questions": 15,
+      "hit_at_1": 0.5333333333333333,
+      "hit_at_5": 0.9333333333333333,
+      "mrr": 0.7055555555555556,
+      "quote_hit_at_5": 0.6
+    },
+    {
+      "config_id": "B",
+      "chunk_size": 220,
+      "overlap": 40,
+      "n_questions": 15,
+      "hit_at_1": 0.6,
+      "hit_at_5": 0.9333333333333333,
+      "mrr": 0.7388888888888889,
+      "quote_hit_at_5": 0.8
+    }
+  ],
+  "comparison_note": "Configs A and B had the same page-based Hit@5 on this verified set.",
+  "failure_cases": [
+    {
+      "kind": "hit_at_5_miss",
+      "id": "Q14",
+      "question": "According to Appendix B, what privacy-related AI-specific risk is listed as new or increased compared with traditional software?",
+      "config_id": "A",
+      "gold_pages": "43",
+      "retrieved_pages": "22;4;44;35;17",
+      "retrieved_chunk_ids": "A_p022_c02;A_p004_c01;A_p044_c00;A_p035_c02;A_p017_c04",
+      "hit_at_1": 0,
+      "hit_at_5": 0,
+      "quote_hit_at_5": 0,
+      "evidence_quote": "Privacy risk due to enhanced data aggregation capability for AI systems.",
+      "config_B_retrieved_pages": "44;13;4;22;22",
+      "why_retrieval_may_have_failed": "Semantic ambiguity around 'privacy' pulled the Privacy-Enhanced body section (page 22), MEASURE 2.10 privacy text (page 35), privacy/accuracy tradeoffs (page 17), the table of contents (page 4), and the next Appendix B page (page 44). The gold sentence is a short bullet on page 43 inside a long list of AI-vs-software risks, so the chunk embedding is dominated by neighboring bullets (pretrained models, drift, opacity) rather than 'data aggregation'.",
+      "chunk_size_observation": "Config B also missed page 43 (retrieved 44, 13, 4, 22, 22). Larger chunks ranked the adjacent Appendix B page first but still did not retrieve the supporting bullet. Neither chunk size helped this query.",
+      "possible_improvement": "BM25 would up-rank the distinctive phrase 'data aggregation'. Hybrid search plus RRF could keep that lexical hit alongside dense 'privacy' candidates. A cross-encoder could reject the Privacy-Enhanced chapter when the question asks for an Appendix B list item."
+    },
+    {
+      "kind": "hit_at_1_and_quote_miss",
+      "id": "Q03",
+      "question": "In the context of the AI RMF, what does risk refer to?",
+      "config_id": "A",
+      "gold_pages": "9",
+      "retrieved_pages": "47;9;44;15;9",
+      "retrieved_chunk_ids": "A_p047_c02;A_p009_c00;A_p044_c02;A_p015_c02;A_p009_c03",
+      "hit_at_1": 0,
+      "hit_at_5": 1,
+      "quote_hit_at_5": 0,
+      "evidence_quote": "risk refers to the composite measure of an event\u2019s probability of occurring and the magnitude or degree of the consequences of the corresponding event.",
+      "config_B_retrieved_pages": "9;47;15;12;1",
+      "config_B_hit_at_1": 1,
+      "config_B_quote_hit_at_5": 1,
+      "why_retrieval_may_have_failed": "Labeled as a Hit@1 miss and quote Hit@5 miss on config A, not a Hit@5 miss. Rank 1 was Appendix D page 47 ('Provide common language... to manage AI risks'), which shares 'AI risk' language but is not the Section 1.1 definition. Page 9 did enter the top 5, but the 120-token window split the definition across A_p009_c00 and A_p009_c01, so neither retrieved chunk contained the full evidence quote. This is an example of page-level Hit@5 overestimating evidence retrieval.",
+      "chunk_size_observation": "Config B (220/40) retrieved page 9 at rank 1 and contained the full quote (Hit@1=1, quote Hit@5=1). Larger chunks helped this question by keeping the definition in one window.",
+      "possible_improvement": "BM25 on 'composite measure' / 'probability of occurring' would prefer the definitional sentence over Appendix D. A cross-encoder reranker would also prefer a definition to a later 'manage AI risks' attribute list."
+    }
+  ],
+  "n_failure_cases_documented": 2,
+  "n_unique_hit_at_5_miss_questions": 1,
+  "failure_case_note": "Fewer than two unique Hit@5-miss questions were available; a Hit@1 and/or quote-level miss was documented as the second case. No failed queries were invented.",
+  "bm25_and_reranking": {
+    "bm25": "BM25 would score lexical overlap between the question and chunk text. It helps when the gold sentence uses the same distinctive terms as the question (for example TEVV, residual risk, GOVERN) that dense MiniLM embeddings may under-weight.",
+    "hybrid": "Hybrid search keeps both BM25 and dense candidate lists, covering exact term matches and paraphrases.",
+    "rrf": "Reciprocal Rank Fusion combines the two ranked lists without needing score calibration, which is useful when BM25 scores and cosine scores are on different scales.",
+    "cross_encoder_reranking": "A cross-encoder would jointly encode question and each top-N chunk, which is slower but typically better at rejecting same-page or nearby chunks that share topic words but not the supporting evidence."
+  }
+}

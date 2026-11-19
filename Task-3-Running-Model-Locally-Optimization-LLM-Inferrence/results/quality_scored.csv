@@ -1,0 +1,94 @@
+﻿prompt_id,model,category,prompt,expected,actual_response,done_reason,output_tokens,quality_score,failure_type,review_notes
+P01,qwen-fp16,factual_qa,What is the capital of Japan? Answer with only the city name.,Tokyo,Tokyo,stop,3,2,None,Provisional review; verify against rubric
+P01,qwen-q4,factual_qa,What is the capital of Japan? Answer with only the city name.,Tokyo,Tokyo,stop,3,2,None,Provisional review; verify against rubric
+P02,qwen-fp16,arithmetic,A server processes 240 requests in 8 seconds. Calculate its throughput in requests per second.,30 requests per second,"To calculate the throughput of the server in requests per second, we need to follow these steps:
+
+1. **Determine the total number of requests processed in 8 seconds:**
+   - The server processes 240 requests in 8 seconds.
+
+2. **Calculate the throughput:**
+   - Throughput is defined as the total number of requests processed per second.
+   - To find the throughput, we divide the total number of requests by the number of seconds.
+
+   \[
+   \text{Throughput} = \frac{\text{Total number of requests}}{\text{Number of seconds}}
+   \]
+
+   Sub",length,128,0,Truncated before answer,Provisional review; verify against rubric
+P02,qwen-q4,arithmetic,A server processes 240 requests in 8 seconds. Calculate its throughput in requests per second.,30 requests per second,"To calculate the throughput of the server in requests per second, you need to divide the total number of requests by the total time in seconds.
+
+Given:
+- Total number of requests = 240
+- Total time = 8 seconds
+
+Throughput = Total number of requests / Total time
+Throughput = 240 / 8
+Throughput = 30 requests per second
+
+So, the server's throughput is 30 requests per second.",stop,96,2,None,Provisional review; verify against rubric
+P03,qwen-fp16,logical_reasoning,All servers are computers. Some computers are laptops. Does it necessarily follow that some servers are laptops? Answer yes or no and briefly explain.,No. The premises do not establish that any servers are laptops.,"Yes, it necessarily follows that some servers are laptops. This is because the statement ""All servers are computers"" implies that every server is a computer. Therefore, if some computers are laptops, it follows that some servers are also laptops.",stop,48,0,Incorrect logical inference,Provisional review; verify against rubric
+P03,qwen-q4,logical_reasoning,All servers are computers. Some computers are laptops. Does it necessarily follow that some servers are laptops? Answer yes or no and briefly explain.,No. The premises do not establish that any servers are laptops.,Yes.,stop,3,0,Incorrect logical inference,Provisional review; verify against rubric
+P04,qwen-fp16,structured_output,"A job completed successfully after 2 retries. Return only a valid JSON object with exactly two keys: status and retries. Status must be the string success, and retries must be an integer.","{""status"":""success"",""retries"":2}","```json
+{
+  ""status"": ""success"",
+  ""retries"": 2
+}
+```",stop,22,1,Markdown-wrapped JSON,Provisional review; verify against rubric
+P04,qwen-q4,structured_output,"A job completed successfully after 2 retries. Return only a valid JSON object with exactly two keys: status and retries. Status must be the string success, and retries must be an integer.","{""status"":""success"",""retries"":2}","```json
+{
+  ""status"": ""success"",
+  ""retries"": 2
+}
+```",stop,22,1,Markdown-wrapped JSON,Provisional review; verify against rubric
+P05,qwen-fp16,coding,Write exactly one Python line that creates a list containing the squares of integers 1 through 5.,"A valid one-line Python expression producing [1, 4, 9, 16, 25].","```python
+squares = [i**2 for i in range(1, 6)]
+print(squares)
+```",stop,26,1,Two code lines and fences,Provisional review; verify against rubric
+P05,qwen-q4,coding,Write exactly one Python line that creates a list containing the squares of integers 1 through 5.,"A valid one-line Python expression producing [1, 4, 9, 16, 25].","```python
+squares = [i**2 for i in range(1, 6)]
+```",stop,22,1,Code fence violates strict format,Provisional review; verify against rubric
+P06,qwen-fp16,summarization,"Summarize in at most 15 words: A software release increased API latency. Engineers identified an inefficient database query and reverted the release, restoring normal latency.","Must preserve the release-related latency increase, database-query issue, rollback, and recovery.","A software release led to increased API latency, which was corrected by reverting the release and restoring normal latency.",stop,23,1,Over word limit; omitted cause,Provisional review; verify against rubric
+P06,qwen-q4,summarization,"Summarize in at most 15 words: A software release increased API latency. Engineers identified an inefficient database query and reverted the release, restoring normal latency.","Must preserve the release-related latency increase, database-query issue, rollback, and recovery.","A software release increased API latency, engineers reverted the release, restoring normal latency.",stop,17,1,Omitted database-query cause,Provisional review; verify against rubric
+P07,qwen-fp16,information_extraction,"Extract only incident_id and severity as valid JSON from: Incident INC-42, severity SEV2, occurred Monday, owner Platform Team.","{""incident_id"":""INC-42"",""severity"":""SEV2""}","```json
+{
+  ""incident_id"": ""INC-42"",
+  ""severity"": ""SEV2""
+}
+```",stop,27,1,Markdown-wrapped JSON,Provisional review; verify against rubric
+P07,qwen-q4,information_extraction,"Extract only incident_id and severity as valid JSON from: Incident INC-42, severity SEV2, occurred Monday, owner Platform Team.","{""incident_id"":""INC-42"",""severity"":""SEV2""}","```json
+{
+  ""incident_id"": ""INC-42"",
+  ""severity"": ""SEV2""
+}
+```",stop,27,1,Markdown-wrapped JSON,Provisional review; verify against rubric
+P08,qwen-fp16,instruction_following,"Sort the following words alphabetically. Return only a comma-separated list: cache, latency, token, batch.","batch, cache, latency, token","cache, batch, latency, token",stop,8,0,Incorrect sorting,Provisional review; verify against rubric
+P08,qwen-q4,instruction_following,"Sort the following words alphabetically. Return only a comma-separated list: cache, latency, token, batch.","batch, cache, latency, token","cache, batch, latency, token",stop,8,0,Incorrect sorting,Provisional review; verify against rubric
+P09,qwen-fp16,numerical_reasoning,A GPU has 24 GB of memory. Model weights require 6 GB and runtime overhead requires 2 GB. How much memory remains?,16 GB,"To determine how much memory remains after allocating memory for model weights and runtime overhead, we need to follow these steps:
+
+1. **Identify the total memory available:**
+   - Total memory available = 24 GB
+
+2. **Identify the memory required for model weights:**
+   - Memory required for model weights = 6 GB
+
+3. **Identify the memory required for runtime overhead:**
+   - Memory required for runtime overhead = 2 GB
+
+4. **Calculate the total memory required:**
+   - Total memory required = Memory required for model weights + Memory required for runtime overhead
+   - Total memory required",length,128,0,Truncated before answer,Provisional review; verify against rubric
+P09,qwen-q4,numerical_reasoning,A GPU has 24 GB of memory. Model weights require 6 GB and runtime overhead requires 2 GB. How much memory remains?,16 GB,"To determine how much memory remains after allocating memory for model weights and runtime overhead, we need to follow these steps:
+
+1. **Identify the total memory required:**
+   - Model weights require 6 GB.
+   - Runtime overhead requires 2 GB.
+   - Total memory required = 6 GB + 2 GB = 8 GB.
+
+2. **Identify the available memory:**
+   - The GPU has 24 GB of memory.
+
+3. **Calculate the remaining memory:**
+   - Remaining memory = Total memory required - Available memory
+   - Remaining memory = 8 GB - 24 GB = -",length,128,0,Incorrect subtraction; truncated,Provisional review; verify against rubric
+P10,qwen-fp16,technical_explanation,Explain the purpose of the transformer KV cache in exactly two sentences without using the word faster.,"Two technically correct sentences describing reuse of previous attention keys and values, without the forbidden word.","The transformer KV cache is a specialized data structure designed to efficiently store and retrieve key-value pairs in a transformer model, which is a type of neural network used for sequence-to-sequence tasks like translation and generation. By caching these key-value pairs, the transformer can significantly reduce the time required to process and generate text, making it more efficient and faster. This caching mechanism allows the model to quickly retrieve information from the cache when needed, rather than having to recompute it from scratch, which can be computationally expensive.",stop,104,1,Instruction violations,Provisional review; verify against rubric
+P10,qwen-q4,technical_explanation,Explain the purpose of the transformer KV cache in exactly two sentences without using the word faster.,"Two technically correct sentences describing reuse of previous attention keys and values, without the forbidden word.","The transformer KV cache is designed to store and retrieve key-value pairs efficiently, allowing for faster access to data during the transformer model training process. This is achieved by caching the most frequently used key-value pairs, reducing the load on the memory and CPU, thereby improving the overall performance of the model.",stop,60,0,Conceptual error; instruction violation,Provisional review; verify against rubric

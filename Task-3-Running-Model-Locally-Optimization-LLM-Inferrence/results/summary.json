@@ -1,0 +1,18 @@
+{
+  "qwen-fp16": {
+    "runs": 30,
+    "aggregate_tokens_per_second": 84.88,
+    "median_wall_seconds": 2.528,
+    "gpu_memory_mib": 1003.94,
+    "loaded_size_mib": 1003.94,
+    "truncated_responses": 6
+  },
+  "qwen-q4": {
+    "runs": 30,
+    "aggregate_tokens_per_second": 69.0,
+    "median_wall_seconds": 2.574,
+    "gpu_memory_mib": 435.22,
+    "loaded_size_mib": 435.22,
+    "truncated_responses": 3
+  }
+}

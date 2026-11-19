@@ -1,0 +1,12 @@
+# Versions below were printed by the executed Colab notebook (Tesla T4).
+# scikit-learn and tqdm were imported but their versions were not recorded.
+torch==2.14.1
+transformers==5.23.0
+peft==0.21.3
+trl==1.18.1
+datasets==4.8.0
+accelerate==1.16.0
+pandas==2.2.3
+pyarrow==23.0.1
+scikit-learn
+tqdm

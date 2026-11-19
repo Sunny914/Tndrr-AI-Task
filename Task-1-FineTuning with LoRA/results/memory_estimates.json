@@ -1,0 +1,7 @@
+{
+  "full_finetuning_gib": 78.2310962677002,
+  "full_with_fp32_master_gib": 104.3081283569336,
+  "lora_trainable_parameters": 4194304,
+  "lora_gib": 13.0853910446167,
+  "qlora_gib": 3.306504011154175
+}
